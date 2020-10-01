@@ -15,7 +15,6 @@ library(glmtools)
 library(GLM3r)
 library(rLakeAnalyzer)
 library(tidyverse)
-# library(reshape2)
 
 # overview of glmtools functions
 #   | Function       | Title           |
@@ -124,6 +123,24 @@ plot_var(nc_file = out_file,
 plot_var_compare(nc_file = out_file, 
                  field_file = field_data, 
                  var_name = 'temp')
+
+# use rLakeAnalyzer to calculate physical derivatives, e.g. thermocline depth
+wtr_data <- get_var(file = out_file,
+                    var_name = 'temp',
+                    reference = 'surface')
+str(wtr_data)
+
+wtr_df <- data.frame('datetime' = wtr_data$DateTime,
+                     as.matrix(wtr_data[, 2:ncol(wtr_data)]))
+colnames(wtr_df) <- c('datetime',paste("wtr_", round(as.numeric(sub(".*_", "", colnames(wtr_df[-1]))),1), sep=""))
+td_df <- ts.thermo.depth(wtr = wtr_df, Smin = 0.1, na.rm = TRUE)
+
+ggplot(td_df, aes(datetime, thermo.depth)) +
+  geom_line() +
+  ggtitle('Thermocline depth') +
+  xlab(label = '') + ylab(label = 'Depth (m)') +
+  scale_y_continuous(trans = "reverse") + 
+  theme_minimal()
 
 #### Example 3: calibrating water temperature parameters
 
