@@ -73,9 +73,6 @@ eg_nml <- set_nml(eg_nml, 'Kw', kw_1)
 write_nml(eg_nml, file = nml_file)
 
 #### Example 2: first visualisations
-# plot our meteorological boundary conditions
-plot_meteo('bcs/meteo.csv')
-
 # run GLM
 GLM3r::run_glm(sim_folder, verbose = T)
 
