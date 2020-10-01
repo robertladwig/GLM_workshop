@@ -208,6 +208,12 @@ plot_var(nc_file = out_file,
 plot_var(nc_file = out_file, 
          var_name = 'NIT_nit')
 
+plot_var_compare(nc_file = out_file, 
+                 field_file = field_data, 
+                 var_name = 'OXY_oxy',
+                 precision = 'hours',
+                 conversion = 32/1000)
+
 aed_template = 'aed2/aed2-template.nml' 
 file.copy(aed_template, 'aed2/aed2.nml', overwrite = TRUE)
 nml_file <- file.path(sim_folder, 'aed2/aed2.nml')
