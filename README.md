@@ -22,8 +22,8 @@ Introduction to process-based lake modeling:
 
 Using the model in R:
   - Running GLM in R
-  - Calibrating water temp. and oxygen parameters
   - Visualising results
+  - Calibrating water temp. and oxygen parameters
   - Checking your phytoplankton
 
 Questions and problems:
