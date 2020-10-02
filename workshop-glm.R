@@ -5,6 +5,9 @@
 cat("\f")
 rm(list = ls())
 
+# if you're using Rstudio:
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+
 setwd('./example')
 
 # overview of files for this workshop

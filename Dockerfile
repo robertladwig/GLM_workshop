@@ -27,7 +27,7 @@ RUN 	echo "rstudio  ALL=(ALL) NOPASSWD:ALL">>/etc/sudoers
 
 RUN	mkdir /home/rstudio/workshop
 WORKDIR /home/rstudio/workshop
-RUN	git clone https://github.com/robertladwig/GLM_workshop.git
+RUN	git clone https://github.com/robertladwig/GLM_workshop.git .
 RUN 	chmod -R 777 .
 
 COPY rserver.conf /etc/rstudio/rserver.conf
