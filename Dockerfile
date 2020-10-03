@@ -28,7 +28,7 @@ RUN 	echo "rstudio  ALL=(ALL) NOPASSWD:ALL">>/etc/sudoers
 RUN	mkdir /home/rstudio/workshop
 WORKDIR /home/rstudio/workshop
 COPY workshop-glm.R /home/rstudio/workshop/
-COPY example -R /home/rstudio/workshop/
+COPY example /home/rstudio/workshop/
 RUN chmod -R 777 .
 
 COPY rserver.conf /etc/rstudio/rserver.conf
