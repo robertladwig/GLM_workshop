@@ -262,7 +262,8 @@ surface_cyano <- get_var(file = out_file,
 ggplot(surface_cyano, aes(DateTime, PHY_cyano_2)) +
   geom_line() +
   ggtitle('Cyanobacteria functional group') +
-  xlab(label = '') + ylab(label = '(mmol/m3)')
+  xlab(label = '') + ylab(label = '(mmol/m3)') +
+  theme_minimal()
 
 # visualize change of surface diatoms over time
 surface_diatom <- get_var(file = out_file, 
@@ -272,8 +273,8 @@ surface_diatom <- get_var(file = out_file,
 ggplot(surface_diatom, aes(DateTime, PHY_diatom_2)) +
   geom_line() +
   ggtitle('Diatoms functional group') +
-  xlab(label = '') + ylab(label = '(mmol/m3)')
-
+  xlab(label = '') + ylab(label = '(mmol/m3)') +
+  theme_minimal()
 
 phyto_list <- get_nml_value(aed_nml,arg_name = 'aed2_phytoplankton::dbase')
 
