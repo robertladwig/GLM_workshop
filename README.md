@@ -37,8 +37,8 @@ There are two paths to follow the workshop examples:
   You’ll need R (version >= 3.5), preferably a GUI of your choice (e.g., Rstudio) and these packages:
   ```
   require(devtools)
-  devtools::install_packages("GLEON/GLM3r", branch = "GLMv.3.1.0a3")
-  devtools::install_packages("hdugan/glmtools", ref = "ggplot_overhaul")
+  devtools::install_github("GLEON/GLM3r", ref = "GLMv.3.1.0a3")
+  devtools::install_github("hdugan/glmtools", ref = "ggplot_overhaul")
   install.packages("rLakeAnalyzer")
   install.packages("tidyverse")
   ```
