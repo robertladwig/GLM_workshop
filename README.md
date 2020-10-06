@@ -5,13 +5,13 @@
 
 :busts_in_silhouette: Robert Ladwig, Aryan Adhlakha, Hilary Dugan & Paul Hanson    
 :computer: [Material](https://github.com/robertladwig/GLM_workshop)  
-:email: [Questions?](mailto:rladiwg2@wisc.edu)
+:email: [Questions?](mailto:rladwig2@wisc.edu)
 
 -----
 
 ## Description
 
-The workshop material applies the lake model GLM to a real-world case, e.g. model calibration, output post-processing and interpreting water quality results. This workshop is intended for all skill levels, although prior knowledge of R is helpful.
+This workshop material applies the lake model GLM to a real-world case, e.g. model calibration, output post-processing and interpreting water quality results. This workshop is intended for all skill levels, although prior knowledge of R is helpful.
 
 ## What will this workshop material cover?
 
