@@ -4,8 +4,8 @@
 -----
 
 :busts_in_silhouette: Robert Ladwig, Aryan Adhlakha, Hilary Dugan & Paul Hanson    
-:computer: [Material](https://github.com/gsagleon/G21.5_GSA_workshop/tree/master/GLM)  
-:email: [Questions?](rladiwg2@wisc.edu)
+:computer: [Material](https://github.com/robertladwig/GLM_workshop)  
+:email: [Questions?](mailto:rladiwg2@wisc.edu)
 
 -----
 
