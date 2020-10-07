@@ -1,7 +1,8 @@
 # author: Robert Ladwig
-# date: 10/01/2020
+# date: 10/07/2020
 # title: GLM Workshop 
 
+#### Workshop setup ####
 cat("\f")
 rm(list = ls())
 
@@ -12,6 +13,14 @@ setwd('./example')
 
 # overview of files for this workshop
 list.files()
+
+# install these packages:
+# install.packages("devtools")
+# require(devtools)
+# devtools::install_github("GLEON/GLM3r", ref = "GLMv.3.1.0a3")
+# devtools::install_github("hdugan/glmtools", ref = "ggplot_overhaul")
+# install.packages("rLakeAnalyzer")
+# install.packages("tidyverse")
 
 # we will need these packages
 library(glmtools)
@@ -48,7 +57,7 @@ library(tidyverse)
 # check out which R version we're currently using
 glm_version()
 
-#### Example 1: reading the namelist file into R
+#### Example 1: reading the namelist file into R  ####
 glm_template = 'glm3-template.nml' 
 sim_folder <- getwd()
 out_file <- file.path(sim_folder, "output","output.nc")
@@ -75,7 +84,7 @@ eg_nml <- set_nml(eg_nml, 'Kw', kw_1)
 # write modified values into namelist file
 write_nml(eg_nml, file = nml_file)
 
-#### Example 2: first visualisations
+#### Example 2: first visualisations ####
 # run GLM
 GLM3r::run_glm(sim_folder, verbose = T)
 
@@ -142,7 +151,7 @@ ggplot(td_df, aes(datetime, thermo.depth)) +
   scale_y_continuous(trans = "reverse") + 
   theme_minimal()
 
-#### Example 3: calibrating water temperature parameters
+#### Example 3: calibrating water temperature parameters ####
 
 temp_rmse <- compare_to_field(nc_file = out_file, 
                               field_file = field_data,
@@ -198,7 +207,7 @@ calibrate_sim(var = 'temp', path = getwd(),
               verbose = TRUE,
               conversion.factor = 1)
 
-#### Example 4: calibrating dissovled oyxgen parameters
+#### Example 4: calibrating dissovled oyxgen parameters ####
 # Is parameterising water quality feasible using automatic optimization techniques? See: 
 # Mi et al 2020: The formation of a metalimnetic oxygen minimum exemplifies how ecosystem dynamics shape biogeochemical processes: A modelling study
 # Fenocchi et al 2019: Applicability of a one-dimensional coupled ecological-hydrodynamic numerical model to future projections in a very deep large lake (Lake Maggiore, Northern Italy/Southern Switzerland)
@@ -239,7 +248,7 @@ calibrate_sim(var = 'OXY_oxy', path = getwd(),
               verbose = TRUE,
               conversion.factor = 32/1000)
 
-# Example 5: phytoplankton
+# Example 5: check your phytoplankton ####
 # Advice for calibrating phytoplankton functional groups, investigate the
 # limitation functions; this example setup is not completely set up for 
 # intensive water quality calculations --> this is just an example how to do it
