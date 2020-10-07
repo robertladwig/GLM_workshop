@@ -28,7 +28,7 @@ This workshop example was tested on General Lake Model (GLM) Version 3.1.0b1. Th
 
 There are two paths to follow the workshop examples:
   ### 1. Use Github and your local R setup
-  Clone and download files from this [Github repository](https://github.com/robertladwig/GLM_workshop).
+  Clone or download files from this [Github repository](https://github.com/robertladwig/GLM_workshop).
   You’ll need R (version >= 3.5), preferably a GUI of your choice (e.g., Rstudio) and these packages:
   ```
   require(devtools)
