@@ -47,5 +47,11 @@ There are two paths to follow the workshop examples:
   docker run --rm -d  -p 8000:8000 -e ROOT=TRUE -e PASSWORD=password hydrobert/glm-workshop:latest
   ```
   Then, open any web browser and type ‘localhost:8000’ and input user: rstudio, and password: password. Rstudio will open up with the script and data available in the file window.
+  
+    After you have finished the workshop examples, you can close the docker application by running
+  ```
+  docker kill $(docker ps -q)
+  docker rm $(docker ps -a -q)
+  ```
 
 -----
