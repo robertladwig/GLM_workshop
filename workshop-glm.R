@@ -17,7 +17,10 @@ list.files()
 # install these packages:
 # install.packages("devtools")
 # require(devtools)
+# # macOS and Linux:
 # devtools::install_github("GLEON/GLM3r", ref = "GLMv.3.1.0a3")
+# # Windows:
+# devtools::install_github("GLEON/GLM3r")
 # devtools::install_github("hdugan/glmtools", ref = "ggplot_overhaul")
 # install.packages("rLakeAnalyzer")
 # install.packages("tidyverse")
@@ -87,10 +90,6 @@ write_nml(eg_nml, file = nml_file)
 #### Example 2: first visualisations ####
 # run GLM
 GLM3r::run_glm(sim_folder, verbose = T)
-# if you are using macOS without gfortran 9 or netcdf installed, you can experience problems,
-# here's working solution, but we will fix this in the near future:
-# sys.string=paste0("LD_LIBRARY_PATH=",find.package("GLM3r"),"/exec ",find.package("GLM3r"),"/exec/macglm3 --nml ",sim_folder,"/glm3.nml")
-# system(sys.string)
 
 # visualize change of water table over time
 water_height <- get_surface_height(file = out_file)
@@ -179,11 +178,6 @@ calib_setup <- data.frame('pars' = as.character(c('wind_factor','lw_factor','ch'
 print(calib_setup)
 glmcmd = NULL        # command to be used, default applies the GLM3r function
 # glmcmd = '/Users/robertladwig/Documents/AquaticEcoDynamics_gfort/GLM/glm'        # custom path to executable
-# if you are using macOS without gfortran 9 or netcdf installed, you can experience problems,
-# here's working solution, but we will fix this in the near future:
-# sys.string=paste0("LD_LIBRARY_PATH=",find.package("GLM3r"),"/exec ",find.package("GLM3r"),"/exec/macglm3 --nml ",sim_folder,"/glm3.nml")
-# glmcmd = sys.string
-
 # Optional variables
 first.attempt = TRUE # if TRUE, deletes all local csv-files that stores the 
 #outcome of previous calibration runs
@@ -207,7 +201,7 @@ calibrate_sim(var = 'temp', path = getwd(),
               nml_file = nml_file, 
               glm_file = glm_file, 
               calib_setup = calib_setup, 
-              glmcmd = glmcmd, first.attempt = TRUE, 
+              glmcmd = NULL, first.attempt = TRUE, 
               period = period, 
               scaling = TRUE, method = 'CMA-ES', metric = 'RMSE', 
               target.fit = 2.0, target.iter = 20, 
@@ -248,7 +242,7 @@ calibrate_sim(var = 'OXY_oxy', path = getwd(),
               nml_file = nml_file, 
               glm_file = glm_file, 
               calib_setup = calib_setup, 
-              glmcmd = glmcmd, first.attempt = FALSE, 
+              glmcmd = NULL, first.attempt = FALSE, 
               period = period, 
               scaling = TRUE, method = 'CMA-ES', metric = 'RMSE', 
               target.fit = 3.0, target.iter = 20, 
