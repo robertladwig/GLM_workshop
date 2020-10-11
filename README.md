@@ -69,6 +69,7 @@ This workshop material applies the lake model GLM to a real-world case, e.g. mod
 ### 2. Use Github and your local R setup
    Alternatively, you can clone or download files from this [Github repository](https://github.com/robertladwig/GLM_workshop) (click the green "Code" button and select the "Clone" or "Download ZIP" option).
     You’ll need R (version >= 3.5), preferably a GUI of your choice (e.g., Rstudio) and these packages:
+
     ```
     require(devtools)
     # macOS and Linux:
