@@ -74,6 +74,7 @@ eg_nml
 class(eg_nml)
 names(eg_nml)
 eg_nml[[1]][1:4]
+eg_nml$light
 
 # read and change values inside the namelist file
 kw_1 <- get_nml_value(eg_nml, 'Kw')
@@ -82,9 +83,10 @@ print(kw_1)
 eg_nml <- set_nml(eg_nml, 'Kw', 1.4)
 get_nml_value(eg_nml, 'Kw')
 
-eg_nml <- set_nml(eg_nml, 'Kw', kw_1)
-
 # write modified values into namelist file
+write_nml(eg_nml, file = nml_file)
+
+eg_nml <- set_nml(eg_nml, 'Kw', kw_1)
 write_nml(eg_nml, file = nml_file)
 
 #### Example 2: first visualisations ####
