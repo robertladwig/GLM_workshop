@@ -49,21 +49,28 @@ This workshop material applies the lake model GLM to a real-world case, e.g. mod
    Then, open any web browser and type ‘localhost:8000’ and input user: rstudio, and password: password. Rstudio will open up with the script and data available in the file window.
 
   If you wish to save files on your local computer (everything will disappear once you close the container), you can also run
+  
     ```
     docker run --rm -d  -p 8000:8000 -e ROOT=TRUE -e PASSWORD=password -v [LOCAL PATH]:/home/rstudio/workshop/local hydrobert/glm-workshop:latest
     ```
+    
     where [LOCAL PATH] would be an existing directory on your machine (e.g., /home/user/docs/glm_workshop_example). Inside the Docker's Rstudio you can then move and copy files to /local to save them on your computer.
 
    After you have finished the workshop examples, you can close the docker application by running
+   
     ```
     docker kill $(docker ps -q)
     docker rm $(docker ps -a -q)
     ```
-    If you want to deinstall the docker after the workshop, check the docker IMAGE ID by typing:
+    
+   If you want to deinstall the docker after the workshop, check the docker IMAGE ID by typing:
+    
     ```
     docker images -a
     ```
-    and remove the container by exchanging "IMAGE ID" with the actual one next to your "hydrobert/glm-workshop" container:
+    
+   and remove the container by exchanging "IMAGE ID" with the actual one next to your "hydrobert/glm-workshop" container:
+   
     ```
     docker rmi "IMAGE ID"
     ```
