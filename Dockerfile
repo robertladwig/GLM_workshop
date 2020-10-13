@@ -14,7 +14,7 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
 
 RUN 	Rscript -e 'install.packages("ncdf4")' \
 	&& Rscript -e 'install.packages("devtools")' \
-	&& Rscript -e 'devtools::install_github("GLEON/GLM3r",ref="GLMv.3.1.0a3")' \
+	&& Rscript -e 'devtools::install_github("robertladwig/GLM3r",ref="3.1.1")' \
 	&& Rscript -e 'devtools::install_github("hdugan/glmtools", ref = "ggplot_overhaul")' \
 	&& Rscript -e 'devtools::install_github("GLEON/rLakeAnalyzer")' \
 	&& Rscript -e 'install.packages("lubridate")' \
