@@ -122,7 +122,7 @@
 &sediment
    benthic_mode = 2
    n_zones = 2
-   zone_heights = 10, 25
+   zone_heights = 10, 20
    sed_temp_mean = 3, 17.9838245406138
    sed_temp_amplitude = 4, 3
    sed_temp_peak_doy = 230, 230
