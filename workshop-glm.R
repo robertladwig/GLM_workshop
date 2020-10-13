@@ -17,9 +17,7 @@ list.files()
 # install these packages:
 # install.packages("devtools")
 # require(devtools)
-# # macOS and Linux:
-# devtools::install_github("GLEON/GLM3r", ref = "GLMv.3.1.0a3")
-# # Windows:
+# devtools::install_github("robertladwig/GLM3r", ref = "v3.1.1")
 # devtools::install_github("GLEON/GLM3r")
 # devtools::install_github("hdugan/glmtools", ref = "ggplot_overhaul")
 # install.packages("rLakeAnalyzer")
