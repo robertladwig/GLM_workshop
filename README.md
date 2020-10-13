@@ -25,7 +25,7 @@ This workshop material applies the lake model GLM to a real-world case, e.g. mod
 ## Prerequisites
 
 ### Word of caution
-  This workshop example was tested on General Lake Model (GLM) Version 3.1.0b1. The setup may not work using older and more recent versions of GLM.
+  This workshop example was tested on General Lake Model (GLM) Version 3.1.1. The setup may not work using older and more recent versions of GLM.
 
   There are two paths to follow the workshop examples:
 
