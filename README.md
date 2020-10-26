@@ -27,7 +27,7 @@ This workshop material applies the lake model GLM to a real-world case, e.g. mod
 ### Word of caution
   This workshop example was tested on General Lake Model (GLM) Version 3.1.1. The setup may not work using older and more recent versions of GLM.
 
-  There are two paths to follow the workshop examples:
+  There are two paths to follow the workshop examples. *We recommend the first option (using Docker).*
 
 ### 1. Use Docker
    To be sure that all the examples will *work* during the workshop, you can use a [container](https://hub.docker.com/r/hydrobert/glm-workshop) of all the material. I'll quote the Docker website here:
@@ -75,16 +75,30 @@ This workshop material applies the lake model GLM to a real-world case, e.g. mod
     
     docker rmi "IMAGE ID"
     
+  Here are some more helpful instructions on how to use [docker](https://docs.google.com/document/d/1uxw5aa1gsMpvCBpsGZlaQOkBELR1MJmBQzu4vEKYBoY/edit?usp=sharing).
     
 ### 2. Use Github and your local R setup
-   Alternatively, you can clone or download files from this [Github repository](https://github.com/robertladwig/GLM_workshop) (click the green "Code" button and select the "Clone" or "Download ZIP" option).
-    You’ll need R (version >= 3.5), preferably a GUI of your choice (e.g., Rstudio) and these packages:
+   Alternatively, you can clone or download files from this [Github repository](https://github.com/robertladwig/GLM_workshop) (click the green "Code" button and select the "Clone" or "Download ZIP" option). 
+  You’ll need R (version >= 3.5), preferably a GUI of your choice (e.g., Rstudio) and these packages: 
+  ``` 
+  require(devtools)
+  devtools::install_github("robertladwig/GLM3r", ref = "v3.1.1")
+  devtools::install_github("hdugan/glmtools", ref = "ggplot_overhaul")
+  install.packages("rLakeAnalyzer")
+  install.packages("tidyverse")
+  ```
+Update: If the GLM3r installation does not work for you and you're experiencing problems when running ```run_glm()```, then you can try installing:
 
-    
-    require(devtools)
-    devtools::install_github("robertladwig/GLM3r", ref = "v3.1.1")    
-    devtools::install_github("hdugan/glmtools", ref = "ggplot_overhaul")
-    install.packages("rLakeAnalyzer")
-    install.packages("tidyverse")
+  ```
+  # macOS/Linux
+  devtools::install_github("GLEON/GLM3r", ref = "GLMv.3.1.0a3")
+  # Windows:
+  devtools::install_github("GLEON/GLM3r")
+  ```
+  
+Windows users will then run v3.1.0a4 whereas Unix users use v3.1.0b1. Unfortunately, some differences between these versions can occur in the model outputs. We are still working on the GLM3r and glmtools packages to keep them updated with new GLM-AED2 releases and to implement new features for model evaluation. This Windows binary sometimes freezes, which can stop the calibration routine. If this happens, please 'stop' the command and re-run it. If you experience problems on macOS (we tested the package only for macOS Catalina) with error messages like 'dyld: Library not loaded', you can also try the following approaches:
+  
+   - use and try ``` devtools::install_github("robertladwig/GLM3r", ref = "v3.1.0a3") ``` to install GLM3r
+   - or install the missing libraries, e.g. by using ['brew'](https://brew.sh): ``` brew install gcc ```, ``` brew install netcdf```, ``` brew install gc```; afterwards you should install this GLM3r version: ```devtools::install_github("robertladwig/GLM3r", ref = "v3.1.0a3-2")``` (we are working on fixing all these macOS-specific problems) 
     
 -----
