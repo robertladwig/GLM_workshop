@@ -1,5 +1,5 @@
 # author: Robert Ladwig
-# date: 10/07/2020
+# date: 07/30/2021
 # title: GLM Workshop 
 
 #### Workshop setup ####
@@ -28,6 +28,7 @@ library(glmtools)
 library(GLM3r)
 library(rLakeAnalyzer)
 library(tidyverse)
+library(lubridate)
 
 # overview of glmtools functions
 #   | Function       | Title           |
@@ -75,6 +76,7 @@ eg_nml[[1]][1:4]
 eg_nml$light
 
 # read and change values inside the namelist file
+# first, we change the light extinction parameter value, Kw
 kw_1 <- get_nml_value(eg_nml, 'Kw')
 print(kw_1)
 
@@ -142,6 +144,7 @@ wtr_data <- get_var(file = out_file,
                     reference = 'surface')
 str(wtr_data)
 
+# transform data into rLakeAnalyzer format
 wtr_df <- data.frame('datetime' = wtr_data$DateTime,
                      as.matrix(wtr_data[, 2:ncol(wtr_data)]))
 colnames(wtr_df) <- c('datetime',paste("wtr_", round(as.numeric(sub(".*_", "", colnames(wtr_df[-1]))),1), sep=""))
@@ -251,10 +254,235 @@ calibrate_sim(var = 'OXY_oxy', path = getwd(),
               verbose = TRUE,
               conversion.factor = 32/1000)
 
-# Example 5: check your phytoplankton ####
+# Example 5a: physics (vanishing ice duration)
+
+# 1) How does the ice formation look in the model? Do we have any ice season in 2010?
+ice_thickness <- get_ice(file = out_file)
+g <- ggplot(ice_thickness, aes(DateTime, `ice(m)`)) +
+  geom_line() +
+  ggtitle('Ice') +
+  xlab(label = '') + ylab(label = 'Ice thickness (m)') +
+  theme_minimal(); g
+
+# 2) Ice forms roughly when surface temp. is below/close to the freezing point. 
+# Do we have many days in the winter seasons that have ice close to freezing?
+surface_temp <- get_var(file = out_file, 
+                        var_name = 'temp',
+                        reference = 'surface',
+                        z_out = 2)
+g / ggplot(surface_temp, aes(DateTime, temp_2)) +
+  geom_line() +
+  ggtitle('Surface water temperature') +
+  xlab(label = '') + ylab(label = 'Temp. (deg C)') +
+  theme_minimal()
+
+# 3) there is the parameter dt_iceon_avg which determines the current water
+# temperature as moving average that depends on past and present values. We 
+# can reduce it to weight the current water temperature stronger, this will
+# result in faster ice onset whenever the surface layer briefly falls below
+# freezing point.
+# But, save the current optimized configuration file first
+file.copy('glm3.nml', 'glm3-copy.nml', overwrite = T)
+
+dt_ice <- get_nml_value(eg_nml, 'dt_iceon_avg')
+print(dt_ice)
+
+eg_nml <- set_nml(eg_nml, 'dt_iceon_avg', 0.05)
+get_nml_value(eg_nml, 'dt_iceon_avg')
+
+write_nml(eg_nml, file = nml_file)
+
+GLM3r::run_glm(sim_folder, verbose = T)
+
+ice_thickness <- get_ice(file = out_file)
+g <- ggplot(ice_thickness, aes(DateTime, `ice(m)`)) +
+  geom_line() +
+  ggtitle('Ice') +
+  xlab(label = '') + ylab(label = 'Ice thickness (m)') +
+  theme_minimal(); g
+surface_temp <- get_var(file = out_file, 
+                        var_name = 'temp',
+                        reference = 'surface',
+                        z_out = 2)
+g.ice <- g / ggplot(surface_temp, aes(DateTime, temp_2)) +
+  geom_line() +
+  ggtitle('Surface water temperature') +
+  xlab(label = '') + ylab(label = 'Temp. (deg C)') +
+  theme_minimal(); g.ice
+
+# 4) Now it's time to explore the impact of air temperature and inflow water
+# temperature on ice dynamics inside Lake Mendota.
+# Feel free to play around with inflow and air temp. temperature values, plot
+# the ice results and discuss your findings in the group.
+# Compare your result anytime with the previous graph 'g.ice'
+# Feel free to change additional parameters like inflow discharge or wind speed!
+g.ice
+.
+file.copy('bcs/yahara.csv', 'bcs/yahara-copy.csv', overwrite = T)
+file.copy('bcs/meteo.csv', 'bcs/meteo-copy.csv', overwrite = T)
+
+inflow <- read.csv('bcs/yahara.csv')
+month.data <- lubridate::month(inflow$time)
+idx <- which(month.data > 10 | month.data < 4)
+inflow$TEMP[idx] <- inflow$TEMP[idx] + 1
+write_csv(inflow, 'bcs/yahara.csv')
+
+meteo <- read.csv('bcs/meteo.csv')
+month.data <- lubridate::month(meteo$Date)
+idx <- which(month.data > 10 | month.data < 4)
+meteo$AirTemp[idx] <- meteo$AirTemp[idx] - 10
+write_csv(meteo, 'bcs/meteo.csv')
+
+GLM3r::run_glm(sim_folder, verbose = T)
+
+ice_thickness <- get_ice(file = out_file)
+g <- ggplot(ice_thickness, aes(DateTime, `ice(m)`)) +
+  geom_line() +
+  ggtitle('Ice') +
+  xlab(label = '') + ylab(label = 'Ice thickness (m)') +
+  theme_minimal(); g
+surface_temp <- get_var(file = out_file, 
+                        var_name = 'temp',
+                        reference = 'surface',
+                        z_out = 2)
+g / ggplot(surface_temp, aes(DateTime, temp_2)) +
+  geom_line() +
+  ggtitle('Surface water temperature') +
+  xlab(label = '') + ylab(label = 'Temp. (deg C)') +
+  theme_minimal()
+
+# Example 5b: biology (growing blooms)
+# 1) Let us first visualize chl-a dynamics in the surface layer as well as 
+# how the Secchi dish depth changes over the seasons. We will assume that
+# Secchi depth = 2 / light exctinction coefficient, and we will averag 
+# modeled light extinction values for this exercise. Can you identify potential
+# blooms from the results?
+surface_chla <- get_var(file = out_file, 
+                        var_name = 'PHY_TCHLA',
+                        reference = 'surface',
+                        z_out = 2)
+g <- ggplot(surface_chla, aes(DateTime, PHY_TCHLA_2)) +
+  geom_line() +
+  ggtitle('Surface Chl-a') +
+  xlab(label = '') + ylab(label = 'Total Chla (ug/L)') +
+  theme_minimal(); g
+
+surface_secchi <- get_var(file = out_file, 
+                        var_name = 'extc_coef',
+                        reference = 'surface',
+                        z_out = 0:5)
+
+surface_secchi <- data.frame('DateTime' = surface_secchi$DateTime,
+  "Secchi" = 2 / rowMeans(surface_secchi[, 2:ncol(surface_secchi)]))
+
+g / ggplot(surface_secchi, aes(DateTime, Secchi)) +
+  geom_line() +
+  ggtitle('Secchi depth') +
+  xlab(label = '') + ylab(label = 'Average Secchi depth (m)') +
+  theme_minimal()
+
+# 2) Now it is time to check what phytoplankton species is growing inside the
+# lake system. Which simulated function algae group, diatoms or cyanobacteria,
+# is growing in which months?
+surface_cyano <- get_var(file = out_file, 
+                         var_name = 'PHY_cyano',
+                         reference = 'surface',
+                         z_out = 2)
+g2 <- ggplot(surface_cyano, aes(DateTime, PHY_cyano_2)) +
+  geom_line() +
+  ggtitle('Cyanobacteria functional group') +
+  xlab(label = '') + ylab(label = '(mmol/m3)') +
+  theme_minimal(); g2
+
+surface_diatom <- get_var(file = out_file, 
+                          var_name = 'PHY_diatom',
+                          reference = 'surface',
+                          z_out = 2)
+g2 / ggplot(surface_diatom, aes(DateTime, PHY_diatom_2)) +
+  geom_line() +
+  ggtitle('Diatoms functional group') +
+  xlab(label = '') + ylab(label = '(mmol/m3)') +
+  theme_minimal()
+
+# 3) It seems like our model projects a dominance of cyanobacteria in Lake 
+# Mendota, let us compare the results with the Chl-a and Secchi disc depth
+# dynamics
+g3 <- ggplot(surface_secchi, aes(DateTime, Secchi)) +
+  geom_line() +
+  ggtitle('Secchi depth') +
+  xlab(label = '') + ylab(label = 'Average Secchi depth (m)') +
+  theme_minimal() 
+g.cyano <- g / g3/ g2; g.cyano
+
+# 4) Now we will experiment on how sensitive our cyanobacteria are to changing
+# inflow nutrient, here orthophosphate, and air wind speed conditions.
+# Feel free to play around with inflow phosphate and air wind speed values, plot
+# the in-lake results and discuss your findings in the group.
+# Compare your result anytime with the previous graph 'g.cyano'
+# Feel free to change additional parameters like inflow nitrate or air temperature!
+g.cyano
+
+file.copy('bcs/yahara.csv', 'bcs/yahara-copy.csv', overwrite = T)
+file.copy('bcs/meteo.csv', 'bcs/meteo-copy.csv', overwrite = T)
+
+inflow <- read.csv('bcs/yahara.csv')
+month.data <- lubridate::month(inflow$time)
+idx <- which(month.data >= 5  & month.data <= 9)
+inflow$PHS_frp[idx] <- inflow$PHS_frp[idx]  * 2
+write_csv(inflow, 'bcs/yahara.csv')
+
+meteo <- read.csv('bcs/meteo.csv')
+month.data <- lubridate::month(meteo$Date)
+idx <- which(month.data >= 5  & month.data <= 9)
+meteo$WindSpeed[idx] <- meteo$WindSpeed[idx] * 0.5
+write_csv(meteo, 'bcs/meteo.csv')
+
+GLM3r::run_glm(sim_folder, verbose = T)
+
+surface_chla <- get_var(file = out_file, 
+                        var_name = 'PHY_TCHLA',
+                        reference = 'surface',
+                        z_out = 2)
+g <- ggplot(surface_chla, aes(DateTime, PHY_TCHLA_2)) +
+  geom_line() +
+  ggtitle('Surface Chl-a') +
+  xlab(label = '') + ylab(label = 'Total Chla (ug/L)') +
+  theme_minimal()
+
+surface_secchi <- get_var(file = out_file, 
+                          var_name = 'extc_coef',
+                          reference = 'surface',
+                          z_out = 0:5)
+
+surface_secchi <- data.frame('DateTime' = surface_secchi$DateTime,
+                             "Secchi" = 2 / rowMeans(surface_secchi[, 2:ncol(surface_secchi)]))
+
+g2 <- ggplot(surface_secchi, aes(DateTime, Secchi)) +
+  geom_line() +
+  ggtitle('Secchi depth') +
+  xlab(label = '') + ylab(label = 'Average Secchi depth (m)') +
+  theme_minimal()
+
+surface_cyano <- get_var(file = out_file, 
+                         var_name = 'PHY_cyano',
+                         reference = 'surface',
+                         z_out = 2)
+g3 <- ggplot(surface_cyano, aes(DateTime, PHY_cyano_2)) +
+  geom_line() +
+  ggtitle('Cyanobacteria functional group') +
+  xlab(label = '') + ylab(label = '(mmol/m3)') +
+  theme_minimal()
+
+g / g2 / g3
+
+# Example 6: check your phytoplankton ####
 # Advice for calibrating phytoplankton functional groups, investigate the
 # limitation functions; this example setup is not completely set up for 
 # intensive water quality calculations --> this is just an example how to do it
+file.copy('bcs/yahara-copy.csv', 'bcs/yahara.csv', overwrite = T)
+file.copy('bcs/meteo-copy.csv', 'bcs/meteo.csv', overwrite = T)
+file.copy('glm3-copy.nml', 'glm3.nml', overwrite = T)
+
 aed_nml <- read_nml('aed2/aed2.nml')
 
 # heat maps of phosphate, nitrate and silica
