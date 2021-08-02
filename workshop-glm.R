@@ -213,7 +213,7 @@ calibrate_sim(var = 'temp', path = getwd(),
               verbose = TRUE,
               conversion.factor = 1)
 
-#### Example 4: calibrating dissovled oyxgen parameters ####
+#### Example 4: calibrating dissolved oyxgen parameters ####
 # Is parameterising water quality feasible using automatic optimization techniques? See: 
 # Mi et al 2020: The formation of a metalimnetic oxygen minimum exemplifies how ecosystem dynamics shape biogeochemical processes: A modelling study
 # Fenocchi et al 2019: Applicability of a one-dimensional coupled ecological-hydrodynamic numerical model to future projections in a very deep large lake (Lake Maggiore, Northern Italy/Southern Switzerland)
@@ -262,6 +262,7 @@ calibrate_sim(var = 'OXY_oxy', path = getwd(),
 # - the person who most recently swam in a lake
 # note taker:take notes of what you did and why, report back to the whole group later
 # - the person with most numerical modeling expertise
+nml_file <- file.path(sim_folder, 'glm3.nml')
 
 #### Example 5a: physics (vanishing ice duration)
 
