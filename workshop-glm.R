@@ -327,7 +327,7 @@ g.ice <- g / ggplot(surface_temp, aes(DateTime, temp_2)) +
 # Compare your result anytime with the previous graph 'g.ice'
 # Feel free to change additional parameters like inflow discharge or wind speed!
 g.ice
-.
+
 file.copy('bcs/yahara.csv', 'bcs/yahara-copy.csv', overwrite = T)
 file.copy('bcs/meteo.csv', 'bcs/meteo-copy.csv', overwrite = T)
 
@@ -350,7 +350,7 @@ g <- ggplot(ice_thickness, aes(DateTime, `ice(m)`)) +
   geom_line() +
   ggtitle('Ice') +
   xlab(label = '') + ylab(label = 'Ice thickness (m)') +
-  theme_minimal(); g
+  theme_minimal()
 surface_temp <- get_var(file = out_file, 
                         var_name = 'temp',
                         reference = 'surface',
