@@ -254,7 +254,16 @@ calibrate_sim(var = 'OXY_oxy', path = getwd(),
               verbose = TRUE,
               conversion.factor = 32/1000)
 
-# Example 5a: physics (vanishing ice duration)
+#### Example 5:
+# Split into two break-out groups: team physics and team biology
+# facilitator: share your screen and walk the team through the exercises
+# - the person who most recently has eaten a pizza 
+# time keeper: keep track of the time, alert if you're running out of time
+# - the person who most recently swam in a lake
+# note taker:take notes of what you did and why, report back to the whole group later
+# - the person with most numerical modeling expertise
+
+#### Example 5a: physics (vanishing ice duration)
 
 # 1) How does the ice formation look in the model? Do we have any ice season in 2010?
 ice_thickness <- get_ice(file = out_file)
@@ -324,13 +333,13 @@ file.copy('bcs/meteo.csv', 'bcs/meteo-copy.csv', overwrite = T)
 inflow <- read.csv('bcs/yahara.csv')
 month.data <- lubridate::month(inflow$time)
 idx <- which(month.data > 10 | month.data < 4)
-inflow$TEMP[idx] <- inflow$TEMP[idx] + 1
+inflow$TEMP[idx] <- inflow$TEMP[idx] + ...
 write_csv(inflow, 'bcs/yahara.csv')
 
 meteo <- read.csv('bcs/meteo.csv')
 month.data <- lubridate::month(meteo$Date)
 idx <- which(month.data > 10 | month.data < 4)
-meteo$AirTemp[idx] <- meteo$AirTemp[idx] - 10
+meteo$AirTemp[idx] <- meteo$AirTemp[idx] - ...
 write_csv(meteo, 'bcs/meteo.csv')
 
 GLM3r::run_glm(sim_folder, verbose = T)
@@ -351,7 +360,7 @@ g / ggplot(surface_temp, aes(DateTime, temp_2)) +
   xlab(label = '') + ylab(label = 'Temp. (deg C)') +
   theme_minimal()
 
-# Example 5b: biology (growing blooms)
+#### Example 5b: biology (growing blooms)
 # 1) Let us first visualize chl-a dynamics in the surface layer as well as 
 # how the Secchi dish depth changes over the seasons. We will assume that
 # Secchi depth = 2 / light exctinction coefficient, and we will averag 
@@ -428,13 +437,13 @@ file.copy('bcs/meteo.csv', 'bcs/meteo-copy.csv', overwrite = T)
 inflow <- read.csv('bcs/yahara.csv')
 month.data <- lubridate::month(inflow$time)
 idx <- which(month.data >= 5  & month.data <= 9)
-inflow$PHS_frp[idx] <- inflow$PHS_frp[idx]  * 2
+inflow$PHS_frp[idx] <- inflow$PHS_frp[idx]  * ...
 write_csv(inflow, 'bcs/yahara.csv')
 
 meteo <- read.csv('bcs/meteo.csv')
 month.data <- lubridate::month(meteo$Date)
 idx <- which(month.data >= 5  & month.data <= 9)
-meteo$WindSpeed[idx] <- meteo$WindSpeed[idx] * 0.5
+meteo$WindSpeed[idx] <- meteo$WindSpeed[idx] * ...
 write_csv(meteo, 'bcs/meteo.csv')
 
 GLM3r::run_glm(sim_folder, verbose = T)
@@ -475,7 +484,7 @@ g3 <- ggplot(surface_cyano, aes(DateTime, PHY_cyano_2)) +
 
 g / g2 / g3
 
-# Example 6: check your phytoplankton ####
+#### Example 6: check your phytoplankton ####
 # Advice for calibrating phytoplankton functional groups, investigate the
 # limitation functions; this example setup is not completely set up for 
 # intensive water quality calculations --> this is just an example how to do it
