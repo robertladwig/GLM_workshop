@@ -118,7 +118,7 @@
    snow_albedo_factor = 1
    snow_rho_max = 500
    snow_rho_min = 100
-   dt_iceon_avg = 0.1
+   dt_iceon_avg = 0.5
 /
 &sediment
    benthic_mode = 2
