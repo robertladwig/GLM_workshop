@@ -32,6 +32,9 @@ RUN chmod -R 777 .
 COPY example /home/rstudio/workshop/example
 WORKDIR /home/rstudio/workshop/example
 RUN chmod -R 777 .
+COPY buildyourownmodel /home/rstudio/workshop/buildyourownmodel
+WORKDIR /home/rstudio/workshop/buildyourownmodel
+RUN chmod -R 777 .
 
 COPY rserver.conf /etc/rstudio/rserver.conf
 RUN apt-get update && apt-get install -y python3-pip
