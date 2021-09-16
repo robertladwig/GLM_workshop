@@ -3,10 +3,10 @@
 
 -----
 
-:busts_in_silhouette: Robert Ladwig, Aryan Adhlakha, Hilary Dugan & Paul Hanson    
+:busts_in_silhouette: Robert Ladwig  
 :computer: [Material](https://github.com/robertladwig/GLM_workshop)  
 :email: [Questions?](mailto:rladwig2@wisc.edu)
-:teacher: [GLEON 21.5 Workshop](https://github.com/gsagleon/G21.5_GSA_workshop/tree/master/GLM), [WSU Workshop](https://github.com/robertladwig/GLM_workshop/blob/master/GLM_workshop_WSU.pdf)
+:teacher: [GLEON 21.5 Workshop](https://github.com/gsagleon/G21.5_GSA_workshop/tree/master/GLM), [WSU Workshop](https://github.com/robertladwig/GLM_workshop/blob/master/GLM_workshop_WSU.pdf), [SIL 2021](https://github.com/robertladwig/SIL21_SC07)
 
 -----
 
