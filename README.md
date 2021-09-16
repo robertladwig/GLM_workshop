@@ -6,7 +6,7 @@
 :busts_in_silhouette: Robert Ladwig  
 :computer: [Material](https://github.com/robertladwig/GLM_workshop)  
 :email: [Questions?](mailto:rladwig2@wisc.edu)
-:teacher: [GLEON 21.5 Workshop](https://github.com/gsagleon/G21.5_GSA_workshop/tree/master/GLM), [WSU Workshop](https://github.com/robertladwig/GLM_workshop/blob/master/GLM_workshop_WSU.pdf), [SIL 2021](https://github.com/robertladwig/SIL21_SC07), [GLEON2021 Workshop](https://github.com/robertladwig/GLM_workshop/blob/master/GLM_workshop_GLEON2021.pdf)
+:teacher: [GLEON 21.5 Workshop](https://github.com/gsagleon/G21.5_GSA_workshop/tree/master/GLM), [WSU Workshop](https://github.com/robertladwig/GLM_workshop/blob/master/GLM_workshop_WSU.pdf), [SIL 2021](https://github.com/robertladwig/SIL21_SC07), [GLEON2021 Workshop](https://github.com/robertladwig/GLM_workshop/blob/master/GLM_Workshop_GLEON2021.pdf)
 
 -----
 
