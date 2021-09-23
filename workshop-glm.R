@@ -255,13 +255,17 @@ calibrate_sim(var = 'OXY_oxy', path = getwd(),
               conversion.factor = 32/1000)
 
 #### Example 5:
-# Split into two break-out groups: team physics and team biology
-# facilitator: share your screen and walk the team through the exercises
-# - the person who most recently has eaten a pizza 
-# time keeper: keep track of the time, alert if you're running out of time
-# - the person who most recently swam in a lake
-# note taker:take notes of what you did and why, report back to the whole group later
-# - the person with most numerical modeling expertise
+# Split into  break-out groups
+# first, decide if you want to look at the PHYSICS (5a) exercise or BIOLOGY (5b) exercise 
+# --> democratic team decision
+# assing roles for the exercise:
+# * facilitator: share your screen and walk the team through the exercises
+#	- the person who most recently has eaten a pizza 
+# * time keeper: keep track of the time, alert if you're running out of time
+#	- the person who most recently swam in a lake
+# * note taker: take notes of what you did and why, report back to the whole group later
+#	- the person with most numerical modeling expertise
+
 nml_file <- file.path(sim_folder, 'glm3.nml')
 
 #### Example 5a: physics (vanishing ice duration)
