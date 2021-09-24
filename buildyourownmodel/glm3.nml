@@ -245,11 +245,11 @@
    subm_flag = .false.
    strm_hf_angle = 65
    strmbd_slope = 1.5
-   strmbd_drag = 0.016,
-   inflow_factor = 1, 1
+   strmbd_drag = 0.016
+   inflow_factor = 1
    inflow_fl = ''
-   inflow_varnum = 15
-   inflow_vars = 'FLOW','SALT','TEMP','PHS_frp','PHS_frp_ads','OGM_dop','OGM_pop','OGM_don','NIT_amm','NIT_nit','OGM_docr','CAR_dic','CAR_pH','SIL_rsi','ZOO_daphnia'
+   inflow_varnum = 3
+   inflow_vars = 'FLOW','SALT','TEMP'
 /
 !-------------------------------------------------------------------------------
 ! outflows
