@@ -20,6 +20,7 @@ This workshop material applies the lake model GLM to a real-world case, e.g. mod
   - Manipulating the configuration files
   - Visualising the results
   - Calibrating water temp. and oxygen parameters
+  - Evaluating effects of external drivers on in-lake processes
   - Checking your phytoplankton
 
 ## Prerequisites
